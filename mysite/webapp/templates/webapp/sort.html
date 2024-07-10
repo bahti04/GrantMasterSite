@@ -1,0 +1,61 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sort Question</title>
+    <link rel="stylesheet" href="{% static 'webapp/css/sort.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Sort Question</h1>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" name="file" id="fileInput" required>
+            <input type="hidden" name="lang" id="langInput">
+            <div class="button-group">
+                <button type="button" onclick="setLanguageAndSubmit('rus')">RUS</button>
+                <button type="button" onclick="setLanguageAndSubmit('kaz')">KAZ</button>
+            </div>
+        </form>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        function setLanguageAndSubmit(language) {
+            document.getElementById('langInput').value = language;
+            processFile();
+        }
+
+        function processFile() {
+            const form = document.getElementById('uploadForm');
+            const formData = new FormData(form);
+
+            fetch('/process/', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('status').innerText = data.message;
+                if (data.output_file) {
+                    const link = document.createElement('a');
+                    link.href = data.output_file;
+                    link.innerText = 'Download Processed File';
+                    link.download = data.output_file.split('/').pop();
+                    document.getElementById('status').appendChild(link);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                document.getElementById('status').innerText = 'Error: ' + error;
+            });
+        }
+    </script>
+</body>
+</html>
+
+
+
+
