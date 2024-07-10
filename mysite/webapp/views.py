@@ -1,6 +1,6 @@
 # views.py
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import json
 import re
@@ -41,7 +41,7 @@ def process_file(request):
 
             remove_unwanted_parts_and_add_space_txt(input_file_path, output_file_path, words)
 
-            return JsonResponse({'message': f'File processed for {lang}', 'output_file': request.build_absolute_uri('/processed_files/' + 'sort_' + uploaded_file.name)})
+            return JsonResponse({'message': f'File processed for {lang}', 'output_file': output_file_path})
         except Exception as e:
             return JsonResponse({'message': str(e)}, status=500)
     else:
@@ -91,3 +91,12 @@ def remove_unwanted_parts_and_add_space_txt(txt_path, output_path, words):
 
     with open(output_path, 'w', encoding='utf-8') as file:
         file.writelines(new_lines)
+
+def download_file(request, file_path):
+    file_path = os.path.join('processed_files', file_path)
+    if os.path.exists(file_path):
+        with open(file_path, 'rb') as fh:
+            response = HttpResponse(fh.read(), content_type="application/octet-stream")
+            response['Content-Disposition'] = f'attachment; filename={os.path.basename(file_path)}'
+            return response
+    return JsonResponse({'message': 'File not found'}, status=404)

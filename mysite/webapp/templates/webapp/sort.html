@@ -41,7 +41,7 @@
                 document.getElementById('status').innerText = data.message;
                 if (data.output_file) {
                     const link = document.createElement('a');
-                    link.href = data.output_file;
+                    link.href = '/download/' + data.output_file.split('/').pop();
                     link.innerText = 'Download Processed File';
                     link.download = data.output_file.split('/').pop();
                     document.getElementById('status').appendChild(link);
@@ -55,6 +55,7 @@
     </script>
 </body>
 </html>
+
 
 
 
