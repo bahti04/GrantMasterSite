@@ -1,0 +1,43 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Duplicate Questions</title>
+    <link rel="stylesheet" href="{% static 'webapp/css/duplicate.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Find Duplicate Questions</h1>
+        <form id="findDuplicateForm" enctype="multipart/form-data">
+            <input type="file" name="file" id="fileInput" required>
+            <div class="button-group">
+                <button type="button" onclick="findDuplicates()">Find</button>
+            </div>
+        </form>
+        <div id="status"></div>
+    </div>
+
+    <script>
+        function findDuplicates() {
+            const form = document.getElementById('findDuplicateForm');
+            const formData = new FormData(form);
+
+            fetch('/find_duplicates/', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('status').innerText = `Number of duplicate questions: ${data.duplicates}`;
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                document.getElementById('status').innerText = 'Error: ' + error;
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merge Files</title>
+    <link rel="stylesheet" href="{% static 'webapp/css/merge.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Merge Files</h1>
+        <form id="mergeForm" enctype="multipart/form-data">
+            <input type="file" name="files" id="fileInput" multiple required>
+            <div class="button-group">
+                <button type="button" onclick="mergeFiles()">Merge</button>
+            </div>
+        </form>
+        <div id="status"></div>
+        <div id="download-links"></div>
+    </div>
+
+    <script>
+        function mergeFiles() {
+            const form = document.getElementById('mergeForm');
+            const formData = new FormData(form);
+
+            fetch('/merged/', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('status').innerText = data.message;
+                const linksContainer = document.getElementById('download-links');
+                linksContainer.innerHTML = '';  // Очищаем предыдущие ссылки
+                if (data.link) {
+                    const a = document.createElement('a');
+                    a.href = data.link;
+                    a.innerText = 'Download Merged File';
+                    a.style.display = 'block';
+                    linksContainer.appendChild(a);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                document.getElementById('status').innerText = 'Error: ' + error;
+            });
+        }
+    </script>
+</body>
+</html>

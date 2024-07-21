@@ -1,0 +1,53 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Normalize Questions</title>
+    <link rel="stylesheet" href="{% static 'webapp/css/normalization.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Normalize Questions</h1>
+        <form id="normalizeForm" enctype="multipart/form-data">
+            <input type="file" name="file" id="fileInput" required>
+            <div class="button-group">
+                <button type="button" onclick="normalizeFile()">Normal</button>
+            </div>
+        </form>
+        <div id="status"></div>
+        <div id="download-links"></div>
+    </div>
+
+    <script>
+        function normalizeFile() {
+            const form = document.getElementById('normalizeForm');
+            const formData = new FormData(form);
+
+            fetch('/normalize/', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('status').innerText = data.message;
+                const linksContainer = document.getElementById('download-links');
+                linksContainer.innerHTML = '';  // Очищаем предыдущие ссылки
+                if (data.link) {
+                    const a = document.createElement('a');
+                    a.href = data.link;
+                    a.innerText = 'Download Normalized File';
+                    a.style.display = 'block';
+                    linksContainer.appendChild(a);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                document.getElementById('status').innerText = 'Error: ' + error;
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Separation</title>
+    <link rel="stylesheet" href="{% static 'webapp/css/separation.css' %}">
+    <style>
+        body {
+            background-image: url('{% static 'webapp/img/1706653168_polinka-top-p-fon-les-tuman-krasivo-43.jpg' %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Separation</h1>
+        <form id="splitForm" enctype="multipart/form-data">
+            <input type="file" name="file" id="fileInput" required>
+            <input type="number" name="questions_per_part" id="questionsInput" placeholder="Number of questions per part" required>
+            <div class="button-group">
+                <button type="button" onclick="splitFile()">Split</button>
+            </div>
+        </form>
+        <div id="status"></div>
+        <div id="download-links"></div>
+    </div>
+
+    <script>
+        function splitFile() {
+            const form = document.getElementById('splitForm');
+            const formData = new FormData(form);
+
+            fetch('/split/', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('status').innerText = data.message;
+                const linksContainer = document.getElementById('download-links');
+                linksContainer.innerHTML = '';  // Очищаем предыдущие ссылки
+                if (data.links) {
+                    data.links.forEach(link => {
+                        const a = document.createElement('a');
+                        a.href = link;
+                        a.innerText = 'Download ' + link.split('/').pop();
+                        a.style.display = 'block';
+                        linksContainer.appendChild(a);
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                document.getElementById('status').innerText = 'Error: ' + error;
+            });
+        }
+    </script>
+</body>
+</html>
+
+

@@ -7,38 +7,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DiveRgenT</title>
     <link rel="stylesheet" href="{% static 'webapp/css/home.css' %}">
+    <style>
+        body {
+            background-image: url('{% static 'webapp/img/1710851694_furman-top-p-khvoinii-les-oboi-4.jpg' %}');
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <div class="button-group">
             <a href="sort/" class="button">Sort Question</a>
-            <span>Сортировка</span>
+            <span class="highlight">Сортировка</span>
         </div>
         <div class="button-group">
-            <a href="#separation" class="button">Separation</a>
-            <span>Разделение на части</span>
+            <a href="separation/" class="button">Separation</a>
+            <span class="highlight">Разделение на части</span>
         </div>
         <div class="button-group">
-            <a href="#merge" class="button">Merge</a>
-            <span>Слияние</span>
+            <a href="merge/" class="button">Merge</a>
+            <span class="highlight">Объединить</span>
         </div>
         <div class="button-group">
-            <a href="#normalization" class="button">Normalization</a>
-            <span>Нормализация формулы</span>
+            <a href="normalization/" class="button">Normalization</a>
+            <span class="highlight">Нормализация формулы</span>
         </div>
         <div class="button-group">
-            <a href="#reformat-question" class="button">Reformat Question</a>
-            <span>Нормализация формата вопроса</span>
+            <a href="reformat/" class="button">Reformat Question</a>
+            <span class="highlight">Нормализация формата вопроса</span>
         </div>
         <div class="button-group">
-            <a href="#empty" class="button">Empty</a>
-            <span>Проверка того, является ли вариант или вопрос пустым</span>
+            <a href="empty/" class="button">Empty</a>
+            <span class="highlight">Проверка того, является ли вариант или вопрос пустым</span>
         </div>
         <div class="button-group">
-            <a href="#find-duplicate" class="button">Find Duplicate</a>
-            <span>Удаление дубликатов</span>
+            <a href="duplicate/" class="button">Find Duplicate</a>
+            <span class="highlight">Найти дубликатов</span>
         </div>
     </div>
 </body>
 </html>
-

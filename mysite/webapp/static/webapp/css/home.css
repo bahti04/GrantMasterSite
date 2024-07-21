@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: #fff;
     margin: 0;
     display: flex;
     justify-content: center;
@@ -9,7 +9,7 @@ body {
 }
 
 .container {
-    background-color: #fff;
+    background-color: #304040;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -22,7 +22,7 @@ body {
 }
 
 .button-group .button {
-    background-color: #007bff;
+    background-color: #04202C;
     color: #fff;
     text-decoration: none;
     padding: 10px 20px;
@@ -35,6 +35,10 @@ body {
 
 .button-group .button:hover {
     background-color: #0056b3;
+}
+
+.button-group .highlight {
+    color: #5B7065;
 }
 
 .button-group span {

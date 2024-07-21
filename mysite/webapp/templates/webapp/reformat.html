@@ -1,0 +1,54 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reformat Questions</title>
+    <link rel="stylesheet" href="{% static 'webapp/css/reformat.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Reformat Questions</h1>
+        <form id="reformatForm" enctype="multipart/form-data">
+            <input type="file" name="file" id="fileInput" required>
+            <input type="text" name="output_file_name" id="outputFileNameInput" placeholder="Output File Name" required>
+            <div class="button-group">
+                <button type="button" onclick="reformatFile()">Reformat</button>
+            </div>
+        </form>
+        <div id="status"></div>
+        <div id="download-links"></div>
+    </div>
+
+    <script>
+        function reformatFile() {
+            const form = document.getElementById('reformatForm');
+            const formData = new FormData(form);
+
+            fetch('/reformated/', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('status').innerText = data.message;
+                const linksContainer = document.getElementById('download-links');
+                linksContainer.innerHTML = '';  // Очищаем предыдущие ссылки
+                if (data.link) {
+                    const a = document.createElement('a');
+                    a.href = data.link;
+                    a.innerText = 'Download Reformatted File';
+                    a.style.display = 'block';
+                    linksContainer.appendChild(a);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                document.getElementById('status').innerText = 'Error: ' + error;
+            });
+        }
+    </script>
+</body>
+</html>
