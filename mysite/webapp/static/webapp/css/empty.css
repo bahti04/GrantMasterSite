@@ -1,7 +1,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: #101820;
     margin: 0;
     display: flex;
     justify-content: center;
@@ -10,7 +10,7 @@ body {
 }
 
 .container {
-    background-color: #fff;
+    background-color: #ff8c00;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -33,10 +33,12 @@ form {
 input[type="file"] {
     margin-bottom: 15px;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #101820;
     border-radius: 5px;
     width: 100%;
     box-sizing: border-box;
+    color: white;
+    background-color: #101820;
 }
 
 .button-group {
@@ -46,7 +48,7 @@ input[type="file"] {
 }
 
 button {
-    background-color: #007bff;
+    background-color: #101820;
     color: #fff;
     border: none;
     padding: 10px 20px;

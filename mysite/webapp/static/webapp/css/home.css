@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #fff;
+    background-color: #101820;
     margin: 0;
     display: flex;
     justify-content: center;
@@ -9,7 +9,7 @@ body {
 }
 
 .container {
-    background-color: #304040;
+    background-color: #ff8c00;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -38,7 +38,7 @@ body {
 }
 
 .button-group .highlight {
-    color: #5B7065;
+    color: #101820;
 }
 
 .button-group span {
